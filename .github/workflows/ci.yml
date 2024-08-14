@@ -15,7 +15,7 @@ jobs:
 
     strategy:
       matrix:
-        project: [01-todo-list, 02-backend-api, 03-web-scraper]
+        project: [01-todo-list, 02-backend-api, 03-web-scraper, 04-url-shortener]
 
     steps:
       - name: Checkout code

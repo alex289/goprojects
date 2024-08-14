@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" class="pref" class="min-h-screen h-full">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>URL Shortener</title>
+    <link href="/static/css/style.css" rel="stylesheet" />
+  </head>
+  <body class="pt-32 sm:pt-40">
+    <main>
+      <h1 class="text-center text-4xl font-bold">URL Shortener</h1>
+      <div class="mt-8 flex flex-col items-center space-y-8 justify-center">
+        <div class="max-w-2xl p-2 w-full">
+          <form action="/shorten" method="POST" class="w-full">
+            <div class="flex items-center border-b border-teal-500 py-2">
+              <input
+                type="text"
+                name="url"
+                placeholder="Enter URL here"
+                class="appearance-none bg-transparent border-none w-full text-gray-300 text-xl mr-3 py-3 px-2 leading-tight focus:!outline-none" />
+              <button
+                type="submit"
+                class="flex-shrink-0 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-lg border-4 text-white py-1 px-2 rounded">
+                Shorten
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>
