@@ -15,11 +15,6 @@ func CreateForm(currencies map[string]string) (float64, string, string) {
 		to     string
 	)
 
-	// var currencyOptions []huh.Option[string]
-	// for currency, name := range currencies {
-	// 	_ = append(currencyOptions, huh.NewOption(currency, name))
-	// }
-
 	form := huh.NewForm(
 		huh.NewGroup(
 			huh.NewInput().
