@@ -16,7 +16,11 @@ func PrintTable(tasks []models.Task, all bool) {
 		fmt.Fprintln(w, "ID\tTask\tCreated\tDone")
 
 		for _, task := range tasks {
-			fmt.Fprintf(w, "%d\t%s\t%s\t%t\n", task.ID, task.Description, timediff.TimeDiff(task.CreatedAt), task.IsComplete)
+			isComplete := "-"
+			if !task.IsComplete.IsZero() {
+				isComplete = timediff.TimeDiff(task.IsComplete)
+			}
+			fmt.Fprintf(w, "%d\t%s\t%s\t%s\n", task.ID, task.Description, timediff.TimeDiff(task.CreatedAt), isComplete)
 		}
 
 		w.Flush()
@@ -26,7 +30,7 @@ func PrintTable(tasks []models.Task, all bool) {
 	fmt.Fprintln(w, "ID\tTask\tCreated")
 
 	for _, task := range tasks {
-		if !task.IsComplete {
+		if task.IsComplete.IsZero() {
 			fmt.Fprintf(w, "%d\t%s\t%s\n", task.ID, task.Description, timediff.TimeDiff(task.CreatedAt))
 		}
 	}

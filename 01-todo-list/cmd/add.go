@@ -38,7 +38,7 @@ var addCmd = &cobra.Command{
 			ID:          maxID + 1,
 			Description: args[0],
 			CreatedAt:   time.Now(),
-			IsComplete:  false,
+			IsComplete:  time.Time{},
 		}
 
 		utils.SaveTasks(append(tasks, task))

@@ -46,7 +46,7 @@ func LoadTasks() ([]models.Task, error) {
 			return nil, err
 		}
 
-		isComplete, err := strconv.ParseBool(row[3])
+		isComplete, err := time.Parse(time.RFC3339, row[3])
 
 		if err != nil {
 			return nil, err
@@ -83,7 +83,7 @@ func SaveTasks(tasks []models.Task) error {
 			strconv.Itoa(row.ID),
 			row.Description,
 			row.CreatedAt.Format(time.RFC3339),
-			strconv.FormatBool(row.IsComplete)})
+			row.IsComplete.Format(time.RFC3339)})
 	}
 
 	writer.Write(headers)

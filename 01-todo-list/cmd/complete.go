@@ -5,6 +5,7 @@ import (
 	"os"
 	"strconv"
 	"tasks/utils"
+	"time"
 
 	"github.com/spf13/cobra"
 )
@@ -38,7 +39,7 @@ var completeCmd = &cobra.Command{
 		for i, task := range tasks {
 			if task.ID == id {
 				taskFound = true
-				tasks[i].IsComplete = true
+				tasks[i].IsComplete = time.Now()
 				utils.SaveTasks(tasks)
 				break
 			}
