@@ -8,7 +8,7 @@ import (
 	"github.com/charmbracelet/huh"
 )
 
-func CreateForm(currencies map[string]string) (float64, string, string) {
+func RunForm(currencies map[string]string) (float64, string, string) {
 	var (
 		amount string
 		from   string

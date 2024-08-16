@@ -4,6 +4,8 @@ import (
 	"currencyconverter/lib"
 	"fmt"
 	"os"
+
+	"github.com/charmbracelet/huh/spinner"
 )
 
 func main() {
@@ -14,15 +16,31 @@ func main() {
 		return
 	}
 
-	currencies := lib.GetCurrencies()
+	var currencies map[string]string
+	currencyAction := func() {
+		currencies = lib.GetCurrencies()
+	}
+
+	_ = spinner.New().
+		Title("Loading currencies...").
+		Action(currencyAction).
+		Run()
 
 	if currencies == nil {
 		return
 	}
 
-	amount, from, to := lib.CreateForm(currencies)
+	amount, from, to := lib.RunForm(currencies)
 
-	rates := lib.GetLatestRates()
+	var rates map[string]float64
+	ratesAction := func() {
+		rates = lib.GetLatestRates()
+	}
+
+	_ = spinner.New().
+		Title("Loading latest rates...").
+		Action(ratesAction).
+		Run()
 
 	if rates == nil {
 		return
@@ -33,5 +51,6 @@ func main() {
 
 	converted := amount * (rateTo / rateFrom)
 
-	fmt.Printf("%.2f %s", converted, to)
+	output := fmt.Sprintf("%.2f %s", converted, to)
+	fmt.Println(output)
 }
