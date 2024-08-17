@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 	"strconv"
-	"tasks/utils"
+	"tasks/parsers"
 	"time"
 
 	"github.com/spf13/cobra"
@@ -20,7 +20,7 @@ var completeCmd = &cobra.Command{
 	Long:  `Complete a task in the list by id and save it to the file`,
 	Args:  cobra.MinimumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
-		tasks, err := utils.LoadTasks()
+		tasks, err := parsers.LoadTasks(parser)
 
 		if err != nil {
 			fmt.Fprintln(os.Stderr, "Failed to load tasks file")
@@ -40,7 +40,6 @@ var completeCmd = &cobra.Command{
 			if task.ID == id {
 				taskFound = true
 				tasks[i].IsComplete = time.Now()
-				utils.SaveTasks(tasks)
 				break
 			}
 		}
@@ -49,5 +48,7 @@ var completeCmd = &cobra.Command{
 			fmt.Fprintln(os.Stderr, "Task not found")
 			os.Exit(1)
 		}
+
+		parsers.SaveTasks(tasks, parser)
 	},
 }

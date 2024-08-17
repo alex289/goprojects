@@ -1,4 +1,4 @@
-package utils
+package csv
 
 import (
 	"encoding/csv"
@@ -6,13 +6,14 @@ import (
 	"os"
 	"strconv"
 	"tasks/models"
+	"tasks/utils"
 	"time"
 )
 
 const fileName = "tasks.csv"
 
 func LoadTasks() ([]models.Task, error) {
-	file, err := loadFile(fileName)
+	file, err := utils.LoadFile(fileName)
 
 	if err != nil {
 		return nil, err
@@ -25,7 +26,7 @@ func LoadTasks() ([]models.Task, error) {
 		return nil, err
 	}
 
-	closeFile(file)
+	utils.CloseFile(file)
 
 	if len(data) == 0 {
 		return []models.Task{}, nil

@@ -17,7 +17,10 @@ var rootCmd = &cobra.Command{
 	},
 }
 
+var parser string
+
 func Execute() {
+	rootCmd.PersistentFlags().StringVarP(&parser, "parser", "p", "csv", "Parser to use for reading and writing tasks (csv, sqlite, json)")
 	if err := rootCmd.Execute(); err != nil {
 		fmt.Fprintln(os.Stderr, err)
 		os.Exit(1)

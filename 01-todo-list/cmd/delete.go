@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 	"strconv"
-	"tasks/utils"
+	"tasks/parsers"
 
 	"github.com/spf13/cobra"
 )
@@ -19,7 +19,7 @@ var deleteCmd = &cobra.Command{
 	Long:  `Delete a task from the list by id by removing it from the file`,
 	Args:  cobra.MinimumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
-		tasks, err := utils.LoadTasks()
+		tasks, err := parsers.LoadTasks(parser)
 
 		if err != nil {
 			fmt.Fprintln(os.Stderr, "Failed to load tasks file")
@@ -39,7 +39,6 @@ var deleteCmd = &cobra.Command{
 			if task.ID == id {
 				taskFound = true
 				tasks = append(tasks[:i], tasks[i+1:]...)
-				utils.SaveTasks(tasks)
 				break
 			}
 		}
@@ -48,5 +47,7 @@ var deleteCmd = &cobra.Command{
 			fmt.Fprintln(os.Stderr, "Task not found")
 			os.Exit(1)
 		}
+
+		parsers.SaveTasks(tasks, parser)
 	},
 }

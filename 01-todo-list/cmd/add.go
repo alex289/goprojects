@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 	"tasks/models"
-	"tasks/utils"
+	"tasks/parsers"
 	"time"
 
 	"github.com/spf13/cobra"
@@ -20,7 +20,7 @@ var addCmd = &cobra.Command{
 	Long:  `Add a task to the list and save it to the file`,
 	Args:  cobra.MinimumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
-		tasks, err := utils.LoadTasks()
+		tasks, err := parsers.LoadTasks(parser)
 
 		if err != nil {
 			fmt.Fprintln(os.Stderr, "Failed to load tasks file")
@@ -60,6 +60,6 @@ var addCmd = &cobra.Command{
 			IsComplete:  time.Time{},
 		}
 
-		utils.SaveTasks(append(tasks, task))
+		parsers.SaveTasks(append(tasks, task), parser)
 	},
 }
