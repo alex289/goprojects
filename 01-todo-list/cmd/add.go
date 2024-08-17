@@ -34,10 +34,29 @@ var addCmd = &cobra.Command{
 			}
 		}
 
+		var dueDate time.Time
+
+		if len(args) > 1 {
+			var layout string = "2006-01-02"
+
+			if len(args[1]) > 10 {
+				layout = "2006-01-02 15:04:05"
+			}
+
+			dueDate, err = time.Parse(layout, args[1])
+			if err != nil {
+				fmt.Fprintln(os.Stderr, "Invalid due date")
+				os.Exit(1)
+			}
+		} else {
+			dueDate = time.Time{}
+		}
+
 		task := models.Task{
 			ID:          maxID + 1,
 			Description: args[0],
 			CreatedAt:   time.Now(),
+			DueDate:     dueDate,
 			IsComplete:  time.Time{},
 		}
 

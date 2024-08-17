@@ -19,7 +19,7 @@ func LoadTasks() ([]models.Task, error) {
 	}
 
 	reader := csv.NewReader(file)
-	reader.FieldsPerRecord = 4
+	reader.FieldsPerRecord = 5
 	data, err := reader.ReadAll()
 	if err != nil {
 		return nil, err
@@ -52,11 +52,18 @@ func LoadTasks() ([]models.Task, error) {
 			return nil, err
 		}
 
+		dueDate, err := time.Parse(time.RFC3339, row[4])
+
+		if err != nil {
+			return nil, err
+		}
+
 		tasks = append(tasks, models.Task{
 			ID:          id,
 			Description: row[1],
 			CreatedAt:   createdAt,
 			IsComplete:  isComplete,
+			DueDate:     dueDate,
 		})
 	}
 
@@ -75,7 +82,7 @@ func SaveTasks(tasks []models.Task) error {
 	writer := csv.NewWriter(file)
 	defer writer.Flush()
 
-	headers := []string{"ID", "Description", "CreatedAt", "IsComplete"}
+	headers := []string{"ID", "Description", "CreatedAt", "IsComplete", "DueDate"}
 	data := [][]string{}
 
 	for _, row := range tasks {
@@ -83,7 +90,8 @@ func SaveTasks(tasks []models.Task) error {
 			strconv.Itoa(row.ID),
 			row.Description,
 			row.CreatedAt.Format(time.RFC3339),
-			row.IsComplete.Format(time.RFC3339)})
+			row.IsComplete.Format(time.RFC3339),
+			row.DueDate.Format(time.RFC3339)})
 	}
 
 	writer.Write(headers)

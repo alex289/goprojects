@@ -7,4 +7,5 @@ type Task struct {
 	Description string
 	CreatedAt   time.Time
 	IsComplete  time.Time
+	DueDate     time.Time
 }
