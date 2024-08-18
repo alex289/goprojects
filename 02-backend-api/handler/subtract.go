@@ -8,8 +8,8 @@ import (
 
 func SubtractHandler(w http.ResponseWriter, r *http.Request) {
 	var requestBody struct {
-		Number1 *int `json:"number1"`
-		Number2 *int `json:"number2"`
+		Number1 *float64 `json:"number1"`
+		Number2 *float64 `json:"number2"`
 	}
 
 	err := json.NewDecoder(r.Body).Decode(&requestBody)
@@ -36,7 +36,7 @@ func SubtractHandler(w http.ResponseWriter, r *http.Request) {
 
 	result := *requestBody.Number1 - *requestBody.Number2
 
-	json.NewEncoder(w).Encode(map[string]int{
+	json.NewEncoder(w).Encode(map[string]float64{
 		"result": result,
 	})
 }

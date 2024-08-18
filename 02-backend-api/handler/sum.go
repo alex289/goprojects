@@ -8,7 +8,7 @@ import (
 
 func SumHandler(w http.ResponseWriter, r *http.Request) {
 	var requestBody struct {
-		Numbers []int `json:"numbers"`
+		Numbers []float64 `json:"numbers"`
 	}
 
 	err := json.NewDecoder(r.Body).Decode(&requestBody)
@@ -33,13 +33,13 @@ func SumHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	sum := 0
+	var sum float64 = 0
 
 	for _, number := range requestBody.Numbers {
 		sum += number
 	}
 
-	json.NewEncoder(w).Encode(map[string]int{
+	json.NewEncoder(w).Encode(map[string]float64{
 		"result": sum,
 	})
 }
