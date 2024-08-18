@@ -21,3 +21,8 @@ func Identify(next http.Handler) http.Handler {
 		next.ServeHTTP(w, r)
 	})
 }
+
+func FromContext(ctx context.Context) (string, bool) {
+	requestID, ok := ctx.Value(requestIDKey).(string)
+	return requestID, ok
+}

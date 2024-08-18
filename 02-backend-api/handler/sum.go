@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"calcapi/db"
 	"encoding/json"
 	"log/slog"
 	"net/http"
@@ -38,6 +39,8 @@ func SumHandler(w http.ResponseWriter, r *http.Request) {
 	for _, number := range requestBody.Numbers {
 		sum += number
 	}
+
+	db.TrackRequest(r, w, -1, -1, "sum", sum)
 
 	json.NewEncoder(w).Encode(map[string]float64{
 		"result": sum,

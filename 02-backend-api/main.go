@@ -1,15 +1,24 @@
 package main
 
 import (
+	"calcapi/db"
 	"calcapi/handler"
 	"calcapi/middleware"
 	"log"
 	"net/http"
+	"os"
 
 	"github.com/rs/cors"
 )
 
 func main() {
+	err := db.InitDb()
+
+	if err != nil {
+		log.Fatal(err)
+		os.Exit(1)
+	}
+
 	router := http.NewServeMux()
 
 	router.HandleFunc("POST /add", handler.AddHandler)
@@ -22,6 +31,7 @@ func main() {
 		middleware.Logging,
 		middleware.Headers,
 		middleware.RateLimit,
+		middleware.Identify,
 	)
 
 	server := http.Server{

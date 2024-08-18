@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"calcapi/db"
 	"encoding/json"
 	"log/slog"
 	"net/http"
@@ -35,6 +36,8 @@ func SubtractHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	result := *requestBody.Number1 - *requestBody.Number2
+
+	db.TrackRequest(r, w, *requestBody.Number1, *requestBody.Number2, "-", result)
 
 	json.NewEncoder(w).Encode(map[string]float64{
 		"result": result,
