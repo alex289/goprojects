@@ -21,6 +21,7 @@ func main() {
 	stack := middleware.CreateStack(
 		middleware.Logging,
 		middleware.Headers,
+		middleware.RateLimit,
 	)
 
 	server := http.Server{
